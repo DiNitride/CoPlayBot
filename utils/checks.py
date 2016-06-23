@@ -30,3 +30,15 @@ def is_server_check(message):
 # Checks whether server ID == ESL Dota 2 Server ID
 def is_server():
     return commands.check(lambda ctx: is_server_check(ctx.message))
+
+# Checks if the message author's roles
+def is_dunce_check(message, check):
+    author = message.author
+    role = discord.utils.find(check, author.roles)
+    return role is not None
+
+# Checks whether the message author has admin role or is
+def is_dunce():
+    def predicate(ctx):
+        return is_dunce_check(ctx.message, lambda r: r.id == '171103388560392193')
+    return commands.check(predicate)

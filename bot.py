@@ -54,6 +54,14 @@ async def ping():
     await bot.say("Pong")
     print("Ping Pong")
 
+@bot.command(pass_conext=True)
+@checks.is_admin()
+async def changegame(*, game: str):
+    """Updates the Bot's game"""
+    await bot.change_status(discord.Game(name=game))
+    await bot.say("Game updated.")
+    print("Updated Bot's Game")
+
 ############################
 ##FANCY TOKEN LOGIN STUFFS##
 ############################

@@ -14,15 +14,15 @@ class Subscriptions():
         # ID first entry
         # Pretty, correctly spelt name as last
         # Various ways of inputting in the middle
-        self.csgo = ['195471958534651904','csgo','counter strike','Counter Strike']
-        self.overwatch = ['195471986808455168','ow','overwatch','Overwatch']
-        self.lol = ['195472348420243456','lol','league','League Of Legends']
-        self.paragon = ['195472489642590208','paragon','Paragon']
-        self.pokemon = ['195472571817263105','pkmn','pokemon','Pokemon']
-        self.rpg = ['195472607900860416','rpg','RPG']
-        self.smash = ['195472623487025154','smash','Smash']
-        self.dank = ['195473816850268160','dank','Dank/Shitposting']
-        self.music = ['195473785447514112','music','Music']
+        self.csgo = ['195471958534651904','csgo','counter strike','#csgo']
+        self.overwatch = ['195471986808455168','ow','overwatch','#overwatch']
+        self.lol = ['195472348420243456','lol','league','#lol']
+        self.paragon = ['195472489642590208','paragon','#paragon']
+        self.pokemon = ['195472571817263105','pkmn','pokemon','#pokemon']
+        self.rpg = ['195472607900860416','rpg','#rpg']
+        self.smash = ['195472623487025154','smash','#smash']
+        self.dank = ['195473816850268160','dank','#dank']
+        self.music = ['195473785447514112','music','#music']
 
         self.allOptions = [self.csgo, self.overwatch, self.lol, self.paragon, self.pokemon, self.rpg, self.smash, self.dank, self.music]
 
@@ -32,12 +32,12 @@ class Subscriptions():
             listStr = listStr + ("\n" + x[-1])
 
         # Makes that string look pretty
-        self.roles = "```Channels available to subscribe to: %s ```" % listStr
+        self.roles = "Channels available to subscribe to: %s " % listStr
 
     # Joins the user to a role
     @checks.is_server()
     @commands.command(hidden=True,pass_context=True)
-    async def join(self, ctx, *, channel: str):
+    async def join(self, ctx, *, channel: str = None):
         """Adds you to a regions role"""
 
         # Get's the server and user from message
@@ -50,6 +50,13 @@ class Subscriptions():
         # Defines whether this command is adding or
         # removing role
         self.sub = True
+
+        if channel is None:
+            output = await self.bot.say(self.roles)
+            await asyncio.sleep(self.delay)
+            await self.bot.delete_message(ctx.message)
+            await self.bot.delete_message(output)
+            return
 
         # Checks if the region is an available option
         for options in self.allOptions:
